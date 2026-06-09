@@ -25,7 +25,7 @@
 - 📊 **游资排名**: 多维度游资实力排名
 
 ### 🤖 AI深度分析功能（NEW！）
-集成**智谱清言GLM-4大模型**，作为资深龙虎榜打板专家，提供专业的投资分析：
+集成**DeepSeek 大模型**，作为资深龙虎榜打板专家，提供专业的投资分析：
 
 - 🎯 **机会股票智能挖掘**（核心功能）:
   - 从所有龙虎榜股票中智能筛选次日大概率上涨的机会股票
@@ -90,12 +90,13 @@ pip install -r requirements.txt
 **Linux/Mac用户：** 运行 `./setup_env.sh`
 
 #### 手动配置：
-1. 访问 [智谱AI开放平台](https://open.bigmodel.cn/) 注册账号
-2. 获取API Key
+1. 访问 [DeepSeek 开放平台](https://platform.deepseek.com/) 注册账号
+2. 获取 API Key
 3. 在项目根目录创建 `.env` 文件
 4. 添加内容：
 ```
-ZHIPU_API_KEY=你的API密钥
+DEEPSEEK_API_KEY=你的API密钥
+DEEPSEEK_BASE_URL=https://api.deepseek.com
 ```
 
 详细配置步骤请查看：[AI_SETUP_GUIDE.md](AI_SETUP_GUIDE.md)
@@ -214,11 +215,11 @@ youzigenzong/
 - 建议在交易日下午5点40后获取最新数据
 
 ### AI分析
-- AI分析基于智谱清言GLM-4大模型
+- AI分析基于 DeepSeek 聊天模型
 - 分析结果仅供参考，不构成投资建议
-- 需要配置有效的API Key才能使用
-- AI调用按量计费，成本约0.01-0.05元/次
-- 新用户有免费额度
+- 需要配置有效的 API Key 才能使用
+- AI 调用按量计费，成本以 DeepSeek 官方价格为准
+- 请关注账户余额与调用限额
 
 ### 投资风险
 - ⚠️ **股市有风险，投资需谨慎**

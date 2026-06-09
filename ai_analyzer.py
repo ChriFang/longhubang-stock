@@ -1,29 +1,34 @@
 """
-AI分析模块 - 使用智谱清言GLM-4大模型进行龙虎榜深度分析
+AI分析模块 - 使用 DeepSeek 大模型进行龙虎榜深度分析
 """
 
 import os
 import pandas as pd
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
-from zhipuai import ZhipuAI
+from openai import OpenAI
 from dotenv import load_dotenv
 import json
+import config
 
 # 加载环境变量
 load_dotenv()
 
 
 class AILongHuAnalyzer:
-    """龙虎榜AI分析器 - 基于智谱清言GLM-4"""
+    """龙虎榜AI分析器 - 基于DeepSeek"""
     
     def __init__(self):
         """初始化AI分析器"""
-        self.api_key = os.getenv('ZHIPU_API_KEY')
+        self.api_key = os.getenv('DEEPSEEK_API_KEY')
         if not self.api_key or self.api_key == 'your_api_key_here':
-            raise ValueError("请在.env文件中配置有效的ZHIPU_API_KEY")
-        
-        self.client = ZhipuAI(api_key=self.api_key)
+            raise ValueError("请在.env文件中配置有效的DEEPSEEK_API_KEY")
+
+        self.client = OpenAI(
+            api_key=self.api_key,
+            base_url=os.getenv('DEEPSEEK_BASE_URL', 'https://api.deepseek.com')
+        )
+        self.model = config.AI_MODEL
         
         # 系统角色设定
         self.system_prompt = """你是一位资深的龙虎榜打板专家，拥有超过15年的A股实战经验。
@@ -51,6 +56,21 @@ class AILongHuAnalyzer:
    - 判断题材的想象空间和持续性
 
 请用专业、精准、实战的语言给出分析，并提供明确的操作建议。"""
+
+    def _chat(self, prompt: str, max_tokens: int) -> str:
+        """调用DeepSeek聊天补全接口"""
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {"role": "system", "content": self.system_prompt},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            top_p=0.8,
+            max_tokens=max_tokens,
+            stream=False
+        )
+        return response.choices[0].message.content or ""
 
     def analyze_stock_opportunity(self, stock_data: pd.DataFrame, stock_name: str) -> Dict[str, any]:
         """
@@ -98,25 +118,14 @@ class AILongHuAnalyzer:
 
 请给出专业、实战的分析意见。"""
 
-            response = self.client.chat.completions.create(
-                model="glm-4-flash",  # 使用GLM-4-Flash模型，速度快且成本低
-                messages=[
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                top_p=0.8,
-                max_tokens=2000
-            )
-            
-            ai_analysis = response.choices[0].message.content
+            ai_analysis = self._chat(prompt, max_tokens=2000)
             
             return {
                 'success': True,
                 'stock_name': stock_name,
                 'analysis': ai_analysis,
                 'context': analysis_context,
-                'model': 'GLM-4-Flash',
+                'model': self.model,
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }
             
@@ -170,25 +179,14 @@ class AILongHuAnalyzer:
 
 给出专业、全面的市场分析。"""
 
-            response = self.client.chat.completions.create(
-                model="glm-4-flash",
-                messages=[
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                top_p=0.8,
-                max_tokens=2500
-            )
-            
-            market_analysis = response.choices[0].message.content
+            market_analysis = self._chat(prompt, max_tokens=2500)
             
             return {
                 'success': True,
                 'date': date,
                 'analysis': market_analysis,
                 'context': market_context,
-                'model': 'GLM-4-Flash',
+                'model': self.model,
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }
             
@@ -243,25 +241,14 @@ class AILongHuAnalyzer:
 
 给出专业的游资画像分析。"""
 
-            response = self.client.chat.completions.create(
-                model="glm-4-flash",
-                messages=[
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                top_p=0.8,
-                max_tokens=2000
-            )
-            
-            youzi_analysis = response.choices[0].message.content
+            youzi_analysis = self._chat(prompt, max_tokens=2000)
             
             return {
                 'success': True,
                 'youzi_name': youzi_name,
                 'analysis': youzi_analysis,
                 'context': youzi_context,
-                'model': 'GLM-4-Flash',
+                'model': self.model,
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }
             
@@ -575,18 +562,7 @@ class AILongHuAnalyzer:
 
 请给出专业、实战、有针对性的分析意见。"""
 
-            response = self.client.chat.completions.create(
-                model="glm-4-flash",
-                messages=[
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.7,
-                top_p=0.8,
-                max_tokens=3000
-            )
-            
-            ai_analysis = response.choices[0].message.content
+            ai_analysis = self._chat(prompt, max_tokens=3000)
             
             return {
                 'success': True,
@@ -596,7 +572,7 @@ class AILongHuAnalyzer:
                 'all_stocks': stock_analysis,
                 'ai_analysis': ai_analysis,
                 'context': analysis_context,
-                'model': 'GLM-4-Flash',
+                'model': self.model,
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }
             

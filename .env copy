@@ -1,2 +1,2 @@
-#复制为.env填入智普清言apikey
-ZHIPU_API_KEY=apikey
+#复制为.env填入deepseek apikey
+DEEPSEEK_API_KEY=

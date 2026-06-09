@@ -20,12 +20,12 @@ if exist .env (
 echo.
 echo 请按照以下步骤操作：
 echo.
-echo 1. 访问 https://open.bigmodel.cn/
+echo 1. 访问 https://platform.deepseek.com/
 echo 2. 注册/登录账号
-echo 3. 进入"API密钥"页面
+echo 3. 进入 API Keys 页面
 echo 4. 创建并复制API密钥
 echo.
-set /p "api_key=请输入您的智谱AI API Key: "
+set /p "api_key=请输入您的 DeepSeek API Key: "
 
 if "%api_key%"=="" (
     echo [错误] API Key不能为空
@@ -35,9 +35,10 @@ if "%api_key%"=="" (
 
 REM 创建.env文件
 (
-echo # 智谱清言AI配置
-echo # 获取地址：https://open.bigmodel.cn/
-echo ZHIPU_API_KEY=%api_key%
+echo # DeepSeek AI配置
+echo # 获取地址：https://platform.deepseek.com/
+echo DEEPSEEK_API_KEY=%api_key%
+echo DEEPSEEK_BASE_URL=https://api.deepseek.com
 ) > .env
 
 echo.

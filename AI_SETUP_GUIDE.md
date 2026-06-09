@@ -2,7 +2,7 @@
 
 ## 🤖 功能简介
 
-本系统集成了**智谱清言GLM-4大模型**，作为资深龙虎榜打板专家，为您提供专业的深度分析。
+本系统集成了**DeepSeek 大模型**，作为资深龙虎榜打板专家，为您提供专业的深度分析。
 
 ### AI分析功能包括：
 
@@ -52,13 +52,13 @@
 
 ## 🚀 快速配置
 
-### 第一步：获取智谱AI API Key
+### 第一步：获取 DeepSeek API Key
 
-1. 访问 [智谱AI开放平台](https://open.bigmodel.cn/)
+1. 访问 [DeepSeek 开放平台](https://platform.deepseek.com/)
 2. 注册/登录账号
-3. 进入"API密钥"页面
-4. 点击"创建API密钥"
-5. 复制生成的API Key
+3. 进入 API Keys 页面
+4. 点击创建 API Key
+5. 复制生成的 API Key
 
 ### 第二步：配置环境变量
 
@@ -67,7 +67,8 @@
 1. 在项目根目录创建`.env`文件
 2. 添加以下内容：
 ```
-ZHIPU_API_KEY=你的API密钥
+DEEPSEEK_API_KEY=你的API密钥
+DEEPSEEK_BASE_URL=https://api.deepseek.com
 ```
 3. 保存文件
 
@@ -82,7 +83,8 @@ touch .env
 
 2. 编辑文件并添加：
 ```
-ZHIPU_API_KEY=你的API密钥
+DEEPSEEK_API_KEY=你的API密钥
+DEEPSEEK_BASE_URL=https://api.deepseek.com
 ```
 
 **快捷方式：** 运行 `./setup_env.sh`
@@ -157,17 +159,17 @@ streamlit run app.py
 
 ## ⚠️ 风险提示
 
-1. **AI分析仅供参考**，不构成投资建议
+1. AI分析仅供参考，不构成投资建议
 2. 股市有风险，投资需谨慎
 3. 请结合自己的判断和风险承受能力做决策
 4. 建议设置止损止盈位
 
 ## 💰 费用说明
 
-智谱AI采用按量付费模式：
-- GLM-4-Flash模型：约0.001元/千tokens
-- 单次分析成本：约0.01-0.05元
-- 新用户赠送免费额度
+DeepSeek 采用按量付费模式：
+- 具体单价以 DeepSeek 官方价格页为准
+- 单次分析成本取决于输入输出 token 数量
+- 请结合模型类型与调用量评估成本
 
 ## 🔧 故障排查
 
@@ -180,19 +182,19 @@ streamlit run app.py
 ### 问题2：分析失败，提示API错误
 **解决方案**：
 - 检查网络连接
-- 确认API Key有效且有余额
-- 查看智谱AI控制台是否有异常
+- 确认 API Key 有效且有余额
+- 查看 DeepSeek 平台状态与账户限制
 
 ### 问题3：分析速度慢
 **解决方案**：
-- GLM-4-Flash已是速度最快的模型
 - 检查网络连接质量
+- 适当减少单次分析的数据量
 - 可能是高峰期，稍后重试
 
 ## 📞 技术支持
 
-- 智谱AI官方文档: https://open.bigmodel.cn/dev/api
-- API状态页: https://status.bigmodel.cn/
+- DeepSeek 官方文档: https://api-docs.deepseek.com/zh-cn/api/create-chat-completion
+- DeepSeek 开放平台: https://platform.deepseek.com/
 
 ## 🎯 最佳实践
 

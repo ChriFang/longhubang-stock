@@ -258,7 +258,7 @@ if 'df' in st.session_state and not st.session_state.df.empty:
     
     with tab5:
         # AI深度分析
-        st.subheader("🤖 AI深度分析 - 基于智谱清言GLM-4")
+        st.subheader("🤖 AI深度分析 - 基于 DeepSeek")
         
         # 检查AI分析器是否初始化成功
         if ai_analyzer is None:
@@ -266,13 +266,13 @@ if 'df' in st.session_state and not st.session_state.df.empty:
             st.info("""
             **启用AI分析功能的步骤：**
             
-            1. 访问 [智谱AI开放平台](https://open.bigmodel.cn/) 注册账号
-            2. 在控制台获取API Key
+            1. 访问 [DeepSeek 开放平台](https://platform.deepseek.com/) 注册账号
+            2. 在控制台获取 API Key
             3. 在项目根目录创建 `.env` 文件
-            4. 在 `.env` 文件中添加：`ZHIPU_API_KEY=你的API密钥`
+            4. 在 `.env` 文件中添加：`DEEPSEEK_API_KEY=你的API密钥`
             5. 重启应用
             
-            智谱清言GLM-4是国产领先的大语言模型，专业的龙虎榜分析能力。
+            DeepSeek 提供 OpenAI 兼容接口，可直接用于本项目的龙虎榜分析功能。
             """)
         else:
             st.success("✅ AI分析引擎已就绪")

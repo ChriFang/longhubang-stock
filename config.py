@@ -21,7 +21,7 @@ DATABASE_FILE = os.path.join(DATA_DIR, "youzi.db")
 
 # AI分析配置
 AI_ANALYSIS_ENABLED = True  # 是否启用AI分析功能
-AI_MODEL = "glm-4-flash"  # 使用的AI模型
+AI_MODEL = "deepseek-v4-pro"  # 使用的AI模型
 
 # 创建数据目录
 if not os.path.exists(DATA_DIR):

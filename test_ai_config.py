@@ -1,5 +1,5 @@
 """
-测试AI配置是否正确
+测试DeepSeek AI配置是否正确
 """
 
 import sys
@@ -28,16 +28,16 @@ def test_dotenv_package():
         print("   请运行: pip install python-dotenv")
         return False
 
-def test_zhipuai_package():
-    """测试zhipuai是否安装"""
-    print("\n3. 检查zhipuai包...")
+def test_openai_package():
+    """测试openai是否安装"""
+    print("\n3. 检查openai包...")
     try:
-        import zhipuai
-        print("   ✓ zhipuai已安装")
+        import openai
+        print("   ✓ openai已安装")
         return True
     except ImportError:
-        print("   ✗ zhipuai未安装")
-        print("   请运行: pip install zhipuai")
+        print("   ✗ openai未安装")
+        print("   请运行: pip install openai")
         return False
 
 def test_api_key():
@@ -47,13 +47,13 @@ def test_api_key():
         from dotenv import load_dotenv
         load_dotenv()
         
-        api_key = os.getenv('ZHIPU_API_KEY')
+        api_key = os.getenv('DEEPSEEK_API_KEY')
         if api_key and api_key != 'your_api_key_here':
             print(f"   ✓ API Key已配置: {api_key[:10]}...")
             return True
         else:
             print("   ✗ API Key未正确配置")
-            print("   请在.env文件中设置有效的ZHIPU_API_KEY")
+            print("   请在.env文件中设置有效的DEEPSEEK_API_KEY")
             return False
     except Exception as e:
         print(f"   ✗ 配置检查失败: {e}")
@@ -77,13 +77,13 @@ def test_ai_analyzer():
 def main():
     """主测试函数"""
     print("=" * 50)
-    print("AI分析功能配置测试")
+    print("DeepSeek AI分析功能配置测试")
     print("=" * 50)
     
     results = []
     results.append(test_env_file())
     results.append(test_dotenv_package())
-    results.append(test_zhipuai_package())
+    results.append(test_openai_package())
     
     if all(results):
         results.append(test_api_key())
@@ -99,7 +99,7 @@ def main():
     
     if all(results):
         print(f"✓ 所有测试通过 ({passed}/{total})")
-        print("\n恭喜！AI分析功能已正确配置，可以使用了！")
+        print("\n恭喜！DeepSeek AI分析功能已正确配置，可以使用了！")
         print("运行 'streamlit run app.py' 启动应用")
     else:
         print(f"✗ 部分测试失败 ({passed}/{total})")
